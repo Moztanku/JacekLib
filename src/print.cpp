@@ -1,24 +1,23 @@
 #include <print.hpp>
 
-#include <iostream>
 #include <format>
-#include <source_location>
-#include <string>
+#include <iostream>
 
-#include <debug.hpp>
 #include <ansi.hpp>
+#include <debug.hpp>
 
 namespace jac {
-    constexpr void print(const std::string& message, 
-        const std::source_location& location)
+
+    void print(const std::string& message, 
+        const std::source_location& location) noexcept
     {
         std::cout << std::format(
             "{} {}@ {}:{}{}\n", message, ANSI_EC::Style::dim, location.file_name(), location.line(), ANSI_EC::reset
         );
     }
 
-    constexpr void print_error(const std::string& message, 
-        const std::source_location& location) 
+    void print_error(const std::string& message, 
+        const std::source_location& location) noexcept
     {
         print(
             std::format("{}[ERROR]{} {}", ANSI_EC::FG::red, ANSI_EC::reset, message),
@@ -26,17 +25,17 @@ namespace jac {
         );
     }
 
-    constexpr void print_warning(const std::string& message, 
-        const std::source_location& location) 
+    void print_warning(const std::string& message, 
+        const std::source_location& location) noexcept
     {
         print(
-            std::format("{}[WARNING]{} {}", ANSI_EC::FG::orange, ANSI_EC::reset, message),
+            std::format("{}[WARNING]{} {}", ANSI_EC::FG::additional::orange, ANSI_EC::reset, message),
             location
         );
     }
 
-    constexpr void print_info(const std::string& message,
-        const std::source_location& location)
+    void print_info(const std::string& message,
+        const std::source_location& location) noexcept
     {
         print(
             std::format("{}[INFO]{} {}", ANSI_EC::FG::cyan, ANSI_EC::reset, message),
@@ -44,9 +43,8 @@ namespace jac {
         );
     }
 
-    constexpr void print_debug(
-        [[maybe_unused]] const std::string& message,
-        [[maybe_unused]] const std::source_location& location) 
+    void print_debug(const std::string& message,
+        const std::source_location& location) noexcept
     {
         if(DEBUG)
             print(
@@ -54,4 +52,5 @@ namespace jac {
                 location
             );
     }
+
 }   // namespace jac

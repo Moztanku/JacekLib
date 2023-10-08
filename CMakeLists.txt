@@ -1,11 +1,26 @@
-cmake_minimum_required(VERSION 3.27.5)
-
-set(CMAKE_CXX_STANDARD 23)
+cmake_minimum_required(VERSION 3.16.3)
 
 project(JacekLib)
 
-add_library(JacekLib)
-target_include_directories(JacekLib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/inc/")
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Set compiler to clang
+# set(CMAKE_C_COMPILER clang)
+# set(CMAKE_CXX_COMPILER clang++)
+
+# Set compiler to gcc
+# set(CMAKE_C_COMPILER gcc)
+# set(CMAKE_CXX_COMPILER g++)
 
 file(GLOB_RECURSE JacekLib_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
-target_sources(JacekLib PRIVATE ${JacekLib_SOURCES})
+
+add_library(JacekLib STATIC ${JacekLib_SOURCES})
+target_include_directories(JacekLib PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/inc")
+
+add_executable(test test.cpp)
+target_include_directories(test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/inc")
+target_link_libraries(test JacekLib)
+
+target_compile_options(JacekLib PRIVATE -Wall -Wextra -pedantic -Werror -O3 -Wno-unused-parameter)
+target_compile_options(test PRIVATE -Wall -Wextra -pedantic -Werror -O3 -Wno-unused-parameter)
