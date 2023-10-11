@@ -1,9 +1,7 @@
 #pragma once
 
 #include <format>
-#include <initializer_list>
 #include <string_view>
-#include <cstring>
 
 namespace jac {
     struct ANSI_EC {
@@ -131,5 +129,10 @@ namespace jac {
                 return std::format("\033[48;2;{};{};{}m", r, g, b);
             }
         };
+
     };
+
+    static constexpr auto operator ""_RGB(const unsigned long long value) noexcept {
+        return std::format("\033[38;2;{};{};{}m", (value >> 16) & 0xFF, (value >> 8) & 0xFF, value & 0xFF);
+    }
 }   // namespace jac

@@ -3,6 +3,8 @@
 #include <string_view>
 #include <iostream>
 
+#define TO_STRING(x) #x
+
 namespace jac {
 
     // Author: https://stackoverflow.com/users/11638718/康桓瑋
@@ -32,4 +34,4 @@ namespace jac {
     constexpr auto type_name(const T& t) {
         return type_name<T>();
     }
-}
+}   // namespace jac
