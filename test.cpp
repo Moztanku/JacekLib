@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+#include <type_defs.hpp>
+
 template <std::ostream& stream = std::cout>
 class StreamCapturer {
     public:
@@ -31,32 +33,14 @@ class StreamCapturer {
         std::streambuf* old = stream.rdbuf(ss.rdbuf());
 };
 
+#define print_max(x) std::cout << #x << " max = " << std::hex << std::numeric_limits<x>::max() << std::endl;
+#define print_min(x) std::cout << #x << " min = " << std::hex << std::numeric_limits<x>::min() << std::endl;
+
 int main() {
-    int x = 1;
-    int& refX = x;
-    int y = 1;
-
-    CHECK_EQ(x, refX);
-    CHECK_EQ(x, y);
-    CHECK_EQ(refX, y);
-    CHECK_EQ(x, 1);
-    CHECK_EQ(x, 1u);
-
-    StreamCapturer capturer;
-
-    // std::string output;
-    // CHECK(true);
-
-    // if(capturer.read() != "")
-    //     std::cerr << "Warning printed" << std::endl;
-
-    // CHECK(false);
-    // if(!capturer.read().contains("[WARNING]"))
-    //     std::cerr << "Warning not printed" << std::endl;
-
-    // CHECK_EQ_TYPE(NULL, nullptr);
-    // if(!capturer.read().contains("[WARNING]"))
-    //     std::cerr << "Warning not printed" << std::endl;
+    print_max(float16);
+    print_max(float32);
+    print_max(float64);
+    // print_max(float128);
 
     return 0;
 }
