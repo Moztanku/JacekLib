@@ -4,7 +4,6 @@
 #include <string>
 
 namespace jac {
-
     void print(const std::string& message, 
         const std::source_location& location = std::source_location::current()) noexcept;
 
@@ -19,5 +18,4 @@ namespace jac {
 
     void print_debug(const std::string& message,
         const std::source_location& location = std::source_location::current()) noexcept;
-
 }   // namespace jac

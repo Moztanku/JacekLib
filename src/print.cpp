@@ -7,7 +7,6 @@
 #include <debug.hpp>
 
 namespace jac {
-
     void print(const std::string& message, 
         const std::source_location& location) noexcept
     {

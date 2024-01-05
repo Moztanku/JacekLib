@@ -1,12 +1,12 @@
 #pragma once
 
+#include <sstream>
 #include <string_view>
 #include <iostream>
 
 #define TO_STRING(x) #x
 
 namespace jac {
-
     // Author: https://stackoverflow.com/users/11638718/康桓瑋
     // Source: https://stackoverflow.com/questions/81870/is-it-possible-to-print-a-variables-type-in-standard-c
     template <typename T>
@@ -34,4 +34,30 @@ namespace jac {
     constexpr auto type_name(const T& t) {
         return type_name<T>();
     }
+
+    template <std::ostream& stream = std::cout>
+    class StreamCapturer {
+        public:
+            ~StreamCapturer(){
+                stream.rdbuf(old);
+            }
+
+            std::string read(){
+                std::string output = ss.str();
+                ss.str(std::string());
+
+                return output;
+            }
+
+            std::string readLine(){
+                std::string output;
+                std::getline(ss, output);
+
+                return output;
+            }
+
+        private:
+            std::stringstream ss;
+            std::streambuf* old = stream.rdbuf(ss.rdbuf());
+    };
 }   // namespace jac

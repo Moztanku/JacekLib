@@ -8,7 +8,6 @@
 #include <ostream>
 
 namespace jac {
-
     template<class T, size_t X, size_t Y>
     class matrix {
         public:
@@ -182,5 +181,4 @@ namespace jac {
             using Column = matrix_slice<true>;
             using Row = matrix_slice<false>;
     }; // class matrix
-
 }   // namespace jac

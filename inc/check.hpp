@@ -3,13 +3,12 @@
 #include <source_location>
 #include <format>
 
-#include <ansi.hpp>
-#include <print.hpp>
-#include <debug.hpp>
-#include <utils.hpp>
+#include "ansi.hpp"
+#include "print.hpp"
+#include "debug.hpp"
+#include "utils.hpp"
 
 namespace jac {
-
     template<typename T>
     void CHECK_IMPL(T condition_value,
         const char* condition_text,
@@ -33,7 +32,7 @@ namespace jac {
 
         if (DEBUG && lhs != rhs) {
             print_warning(
-                std::format("CheckEQ \"{}{}{}\" == \"{}{}{}\" failed", style, lhs_text, ANSI_EC::reset, style, rhs_text, ANSI_EC::reset),
+                std::format("CheckEQ \"{0}{2}{1}\" == \"{0}{3}{1}\" failed", style, ANSI_EC::reset, lhs_text, rhs_text),
                 location
             );
         }
@@ -47,19 +46,17 @@ namespace jac {
         const auto style = ANSI_EC::concat(ANSI_EC::FG::yellow, ANSI_EC::Style::bold);
         print_warning(
             std::format(
-                "CheckEQ \"{}{}{}\" == \"{}{}{}\" failed, different types {} and {}", 
-                style, lhs_text, ANSI_EC::reset,
-                style, rhs_text, ANSI_EC::reset, 
+                "CheckEQ \"{0}{2}{1}\" == \"{0}{3}{1}\" failed, different types {4} and {5}", 
+                style, ANSI_EC::reset, lhs_text, rhs_text,
                 jac::type_name<T>(), jac::type_name<U>()
             ), location
         );
     };
-
 }   // namespace jac
 
-#define CHECK(condition) \
+#define JAC_CHECK(condition) \
     jac::CHECK_IMPL(condition, #condition, std::source_location::current())
 
-#define CHECK_EQ(lhs, rhs) \
+#define JAC_CHECK_EQ(lhs, rhs) \
     jac::CHECK_EQ_IMPL(lhs, rhs, #lhs, #rhs, std::source_location::current())
 
