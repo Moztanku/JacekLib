@@ -45,7 +45,7 @@ namespace jac {
     void print_debug(const std::string& message,
         const std::source_location& location) noexcept
     {
-        if(DEBUG)
+        if(Debug)
             print(
                 std::format("{}[DEBUG]{} {}", ANSI_EC::FG::magenta, ANSI_EC::reset, message),
                 location

@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef Release
-    #define DEBUG true
+    constexpr bool Debug = true;
 #else
-    #define DEBUG false
+    constexpr bool Debug = false;
 #endif

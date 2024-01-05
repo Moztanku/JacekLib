@@ -15,7 +15,7 @@ namespace jac {
         const std::source_location& location) noexcept
     {
         const auto style = ANSI_EC::concat(ANSI_EC::FG::yellow, ANSI_EC::Style::bold);
-        if (DEBUG && !static_cast<bool>(condition_value)) {
+        if (Debug && !static_cast<bool>(condition_value)) {
             print_warning(
                 std::format("Check \"{}{}{}\" failed", style, condition_text, ANSI_EC::reset),
                 location
@@ -30,7 +30,7 @@ namespace jac {
     {
         const auto style = ANSI_EC::concat(ANSI_EC::FG::yellow, ANSI_EC::Style::bold);
 
-        if (DEBUG && lhs != rhs) {
+        if (Debug && lhs != rhs) {
             print_warning(
                 std::format("CheckEQ \"{0}{2}{1}\" == \"{0}{3}{1}\" failed", style, ANSI_EC::reset, lhs_text, rhs_text),
                 location
