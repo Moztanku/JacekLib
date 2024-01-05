@@ -59,4 +59,3 @@ namespace jac {
 
 #define JAC_CHECK_EQ(lhs, rhs) \
     jac::CHECK_EQ_IMPL(lhs, rhs, #lhs, #rhs, std::source_location::current())
-
