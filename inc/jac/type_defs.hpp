@@ -55,35 +55,39 @@ using zstring = char*;          using wstring = wchar_t*;
 
 using c_string = czstring;      using c_wstring = cwstring;
 
-template<typename T> using ptr = T*;
-template<typename T> using uptr = std::unique_ptr<T>;
-template<typename T> using sptr = std::shared_ptr<T>;
-template<typename T> using wptr = std::weak_ptr<T>;
 
-template<typename T>
-constexpr auto mk_uptr(T&& t) noexcept { return std::make_unique<T>(std::forward<T>(t)); }
+template<class T> using ptr = T*;
+template<typename ...T> using uptr = std::unique_ptr<T...>;
+template<typename ...T> using sptr = std::shared_ptr<T...>;
+template<typename ...T> using wptr = std::weak_ptr<T...>;
 
-template<typename T>
-constexpr auto mk_sptr(T&& t) noexcept { return std::make_shared<T>(std::forward<T>(t)); }
+template<typename... T>
+constexpr inline auto mk_uptr(T&&... args) -> decltype(std::make_unique<T...>(std::forward<T>(args)...))
+{
+    return std::make_unique<T...>(std::forward<T>(args)...);
+}
+
+template<typename... T>
+constexpr inline auto mk_sptr(T&&... args) -> decltype(std::make_shared<T...>(std::forward<T>(args)...))
+{
+    return std::make_shared<T...>(std::forward<T>(args)...);
+}
 
 using void_ptr = void*;
 
-template<typename T> using ref = T&;
+template<class T> using ref = T&;
 #endif  // JAC_NO_PTR_ALIASES
 
 #ifndef JAC_NO_STD_ALIASES
 // aliases for std
 
-template<typename T> using unique_ptr = std::unique_ptr<T>;
-template<typename T> using shared_ptr = std::shared_ptr<T>;
-template<typename T> using weak_ptr = std::weak_ptr<T>;
+using std::unique_ptr;
+using std::shared_ptr;
+using std::weak_ptr;
 
-template<typename T>
-constexpr auto make_unique(T&& t) noexcept { return std::make_unique<T>(std::forward<T>(t)); }
+using std::make_unique;
+using std::make_shared;
+using std::move;
+using std::forward;
 
-template<typename T>
-constexpr auto make_shared(T&& t) noexcept { return std::make_shared<T>(std::forward<T>(t)); }
-
-template<typename T>
-constexpr auto move(T&& t) noexcept { return std::move(std::forward<T>(t)); }
 #endif  // JAC_NO_STD_ALIASES

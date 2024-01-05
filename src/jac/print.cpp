@@ -1,10 +1,10 @@
-#include <print.hpp>
+#include "jac/print.hpp"
 
 #include <format>
 #include <iostream>
 
-#include <ansi.hpp>
-#include <debug.hpp>
+#include "jac/ansi.hpp"
+#include "jac/debug.hpp"
 
 namespace jac {
     void print(const std::string& message, 
