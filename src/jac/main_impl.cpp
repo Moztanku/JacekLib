@@ -4,15 +4,30 @@
 
 #include "jac/type_defs.hpp"
 
+namespace {
+    constexpr std::string invalid = "";
+    constexpr std::string executable = "program";
+    constexpr std::string default_arg = "true";
+}
+
 namespace jac {
-    const std::string_view& Arguments::operator[](const std::string& key) const
+    const std::string_view Arguments::operator[](const std::string_view key) const
     {
         const auto it = args.find(key);
 
-        static const std::string_view invalid = "";
-
         if (it == args.end())
             return invalid;
+
+        return it->second;
+    }
+
+    const std::string_view Arguments::operator[](const size_t index) const
+    {
+        if (index >= args.size())
+            return invalid;
+
+        auto it = args.begin();
+        std::advance(it, index);
 
         return it->second;
     }
@@ -35,7 +50,7 @@ namespace jac {
     int main(int argc, char** argv, char** envp)
     {
         std::map<std::string_view, std::string_view> arg;
-        arg["program"] = argv[0];
+        arg[executable] = argv[0];
 
         for (idx i = 1; i < argc; i++)
         {
@@ -64,7 +79,7 @@ namespace jac {
                 if (i + 1 >= argc || argv[i + 1][0] == '-')
                 {
                     std::string_view key = argument;
-                    std::string_view value = "true";
+                    std::string_view value = default_arg;
 
                     arg[key] = value;
                 } else {

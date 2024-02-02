@@ -15,7 +15,8 @@ namespace jac {
             Arguments operator=(const Arguments&) = delete;
             Arguments operator=(Arguments&&) = delete;
 
-            const std::string_view& operator[](const std::string& key) const;
+            const std::string_view operator[](const std::string_view key) const;
+            const std::string_view operator[](const size_t index) const;
 
             const_iterator begin() const;
             const_iterator end() const;
