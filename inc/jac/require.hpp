@@ -29,11 +29,18 @@ namespace jac {
         const std::source_location& location)
     {
         const auto style = ANSI_EC::concat(ANSI_EC::FG::yellow, ANSI_EC::Style::bold);
+
         if (lhs != rhs) {
             print_error(
                 std::format("RequireEQ \"{0}{2}{1}\" == \"{0}{3}{1}\" failed", style, ANSI_EC::reset, lhs_text, rhs_text),
                 location
             );
+
+            print_warning(
+                std::format("   Values: {0}{2}{1} != {0}{3}{1}", style, ANSI_EC::reset, lhs, rhs),
+                location
+            );
+
             throw std::runtime_error("Require failed!");
         }
     }
@@ -44,14 +51,22 @@ namespace jac {
         const std::source_location& location)
     {
         const auto style = ANSI_EC::concat(ANSI_EC::FG::yellow, ANSI_EC::Style::bold);
-        if (lhs != rhs) {
-            print_error(
-                std::format("RequireEQ \"{0}{2}{1}\" == \"{0}{3}{1}\" failed, different types {4} and {5}",
-                style, ANSI_EC::reset, lhs_text,  rhs_text, jac::type_name<T>(), jac::type_name<U>()),
-                location
-            );
-            throw std::runtime_error("Require failed!");
-        }
+        print_error(
+            std::format(
+                "RequireEQ \"{0}{2}{1}\" == \"{0}{3}{1}\" failed",
+                style, ANSI_EC::reset, lhs_text,  rhs_text
+            ), location
+        );
+
+        print_error(
+            std::format(
+                "   Types: {0}{2}{1} != {0}{3}{1}",
+                style, ANSI_EC::reset,
+                jac::type_name<T>(), jac::type_name<U>()
+            ), location
+        );
+
+        throw std::runtime_error("Require failed!");
     }
 }   // namespace jac
 
@@ -60,4 +75,4 @@ namespace jac {
 
 
 #define JAC_REQUIRE_EQ(lhs, rhs) \
-    REQUIRE_EQ_IMPL(lhs, rhs, #lhs, #rhs, std::source_location::current())
+    jac::REQUIRE_EQ_IMPL(lhs, rhs, #lhs, #rhs, std::source_location::current())

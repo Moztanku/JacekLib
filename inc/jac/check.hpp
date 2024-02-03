@@ -35,6 +35,11 @@ namespace jac {
                 std::format("CheckEQ \"{0}{2}{1}\" == \"{0}{3}{1}\" failed", style, ANSI_EC::reset, lhs_text, rhs_text),
                 location
             );
+
+            print_warning(
+                std::format("   Values: {0}{2}{1} != {0}{3}{1}", style, ANSI_EC::reset, lhs, rhs),
+                location
+            );
         }
     };
 
@@ -46,9 +51,16 @@ namespace jac {
         const auto style = ANSI_EC::concat(ANSI_EC::FG::yellow, ANSI_EC::Style::bold);
         print_warning(
             std::format(
-                "CheckEQ \"{0}{2}{1}\" == \"{0}{3}{1}\" failed, different types {4} and {5}", 
-                style, ANSI_EC::reset, lhs_text, rhs_text,
-                jac::type_name<T>(), jac::type_name<U>()
+                "CheckEQ \"{0}{2}{1}\" == \"{0}{3}{1}\" failed", 
+                style, ANSI_EC::reset, lhs_text, rhs_text
+            ), location
+        );
+
+        print_warning(
+            std::format(
+                "   Types: {0}{2}{1} != {0}{3}{1}",
+                style, ANSI_EC::reset,
+                jac::type_name<T>(), jac::type_name<U>
             ), location
         );
     };
