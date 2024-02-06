@@ -13,6 +13,3 @@ target_include_directories(JacekLib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/inc")
 target_compile_options(JacekLib PRIVATE -Wall -Wextra -pedantic -Werror -O3 -Wno-unused-parameter -Wno-sign-compare)
 
 file(GLOB_RECURSE JacekLibTest_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/tst/**.cpp")
-
-add_executable(JacekLibTest ${JacekLibTest_SOURCES})
-target_link_libraries(JacekLibTest JacekLib)
