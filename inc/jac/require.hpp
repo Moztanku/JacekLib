@@ -46,7 +46,7 @@ namespace jac {
     }
 
     template<typename T, typename U>
-    void REQUIRE_EQ_IMPL(const T& lhs, const U& rhs,
+    void REQUIRE_EQ_IMPL(const T& /*lhs*/, const U& /*rhs*/,
         const char* lhs_text, const char* rhs_text,
         const std::source_location& location)
     {

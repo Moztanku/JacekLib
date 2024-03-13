@@ -31,7 +31,7 @@ namespace jac {
     }
 
     template<typename T>
-    constexpr auto type_name(const T& t) {
+    constexpr auto type_name(const T& /*unused*/) {
         return type_name<T>();
     }
 
