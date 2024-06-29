@@ -20,20 +20,20 @@ namespace jac
                 setData(data);
             }
 
-            [[nodiscard]] constexpr auto getPtr() const noexcept -> const void* {
+            [[nodiscard]] auto getPtr() const noexcept -> const void* {
                 return reinterpret_cast<void*>(m_ptr & ~upper_bits & ~memory_alignment);
             }
 
-            constexpr auto setPtr(const void* ptr) noexcept -> void {
+            auto setPtr(const void* ptr) noexcept -> void {
                 m_ptr &= upper_bits | memory_alignment;
                 m_ptr |= reinterpret_cast<uint64>(ptr);
             }
 
-            [[nodiscard]] constexpr auto getData() const noexcept -> uint18 {
+            [[nodiscard]] auto getData() const noexcept -> uint18 {
                 return (m_ptr & memory_alignment) + ((m_ptr & upper_bits) >> 46);
             }
 
-            constexpr auto setData(uint18 data) noexcept -> void {
+            auto setData(uint18 data) noexcept -> void {
                 data &= max_data;
 
                 m_ptr &= ~memory_alignment & ~upper_bits;

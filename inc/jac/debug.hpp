@@ -1,7 +1,4 @@
 #pragma once
 
-#ifndef Release
-    constexpr bool Debug = true;
-#else
-    constexpr bool Debug = false;
-#endif
+#include "jac/impl/debug.hpp"
+constexpr bool Debug = jac::impl::Debug;
